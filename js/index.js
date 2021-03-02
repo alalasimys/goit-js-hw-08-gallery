@@ -9,10 +9,13 @@ const galleryMarkup = createGalleryMarkup(gallery);
 
 galleryListRef.insertAdjacentHTML("afterbegin", galleryMarkup);
 
+const listGalleryItemRef = document.querySelector(".gallery__item");
+
 galleryListRef.addEventListener("click", onGalleryItemsClick);
 modalRef.addEventListener("click", onModalOverlayCloseClick);
 modalBtnCloseRef.addEventListener("click", onModalBtnCloseClick);
 window.addEventListener("keyup", onModalCloseByEsc);
+window.addEventListener("keyup", onKeyboardSliderClick);
 
 function createGalleryMarkup(items) {
   return items
@@ -45,6 +48,34 @@ function onGalleryItemsClick(event) {
 
   modalImgRef.src = event.target.dataset.source;
   modalImgRef.alt = event.target.alt;
+
+  listGalleryItemRef.classList.add("active");
+}
+
+function onKeyboardSliderClick(event) {
+  const activeListGalleryItemRef = document.querySelector(".active");
+
+  if (event.key === "ArrowRight") {
+    activeListGalleryItemRef.classList.remove("active");
+    let activeEl = activeListGalleryItemRef.nextSibling;
+    if (!activeEl) {
+      activeEl = listGalleryItemRef;
+    }
+    activeEl.classList.add("active");
+    const activeImgRef = activeEl.querySelector(".gallery__image");
+    modalImgRef.src = activeImgRef.dataset.source;
+  }
+
+  if (event.key === "ArrowLeft") {
+    activeListGalleryItemRef.classList.remove("active");
+    let activeEl = activeListGalleryItemRef.previousSibling;
+    if (!activeEl) {
+      activeEl = galleryListRef.lastChild;
+    }
+    activeEl.classList.add("active");
+    const activeImgRef = activeEl.querySelector(".gallery__image");
+    modalImgRef.src = activeImgRef.dataset.source;
+  }
 }
 
 function onModalOverlayCloseClick(event) {
