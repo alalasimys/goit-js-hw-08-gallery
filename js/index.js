@@ -78,23 +78,25 @@ function onKeyboardSliderClick(event) {
   }
 }
 
+function closeModalWindowFn() {
+  modalRef.classList.remove("is-open");
+  modalImgRef.src = "";
+}
+
 function onModalOverlayCloseClick(event) {
   if (event.target !== modalImgRef) {
-    modalRef.classList.remove("is-open");
-    modalImgRef.src = "";
+    closeModalWindowFn();
   }
 }
 
 function onModalBtnCloseClick(event) {
   if (event.target === modalBtnCloseRef) {
-    modalRef.classList.remove("is-open");
-    modalImgRef.src = "";
+    closeModalWindowFn();
   }
 }
 
 function onModalCloseByEsc(event) {
   if (event.key === "Escape") {
-    modalRef.classList.remove("is-open");
-    modalImgRef.src = "";
+    closeModalWindowFn();
   }
 }
